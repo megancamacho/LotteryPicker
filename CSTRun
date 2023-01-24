@@ -1,0 +1,95 @@
+#include <cstdlib>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+bool checkVal ();
+vector<int> getNumbers();
+
+void setPowerball (vector<int>& numbers );
+void showNumbers (vector<int> numbers);
+
+int main()
+{
+  srand(time(0));
+  int times ;
+  string ans;
+  
+  do
+    {
+      cout << " How many lotto numbers would you like to generate ? " << endl;
+      cin >> times; // takes the input from user
+      for (int t = 0; t < times ; t++)
+        {
+          vector <int> numbers = getNumbers();
+          setPowerball(numbers);
+          showNumbers(numbers);
+        }
+      
+      cout << "Would you like to see more numbers ? (Y / N )" << endl;
+      cin >> ans ;
+    }
+    while (ans != "N"); // if the user doesnt want to see more numbers then the program stops
+}
+
+void showNumbers (vector<int> numbers)
+{
+  for (int t = 0; t < 5; t++)
+    {
+      cout << numbers [t]; // generates and shows the random numbers
+      if (t < 4)
+        cout << "  ";
+    }
+  
+  cout << endl;
+}
+
+bool checkVal(vector<int> numbers , int size , int value)
+{
+  for (int t = 0; t < size; ++t)
+    {
+      if (numbers[t] == value)
+      {
+        return true;
+      }
+    }
+  return false;
+}
+
+void setPowerball(vector<int>& numbers)
+{
+  for (int t = 5; t < 6; t++)
+    {
+  int last = rand() % 26 + 1;
+  if (checkVal(numbers, t, last))
+  {
+  t--;
+  }
+  else 
+  {
+    numbers.push_back(last);
+  }
+}
+}
+
+vector<int> getNumbers()
+{
+  vector<int> numbers;
+  for (int t = 0; t < 5; t++)
+    {
+      int num = rand() % 69 + 1;
+      if (checkVal(numbers, t , num))
+      {
+        t--;
+      }
+      else
+      {
+        numbers.push_back(num);
+      }
+    }
+  sort(numbers.begin(), numbers.end());
+  return numbers;
+}
+
